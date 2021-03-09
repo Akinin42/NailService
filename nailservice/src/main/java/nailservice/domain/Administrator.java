@@ -1,18 +1,22 @@
 package nailservice.domain;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Administrator {
     
-    public Map<Date, Order> getMasterDayShedule(String masterName, Date date) {
-        NailMaster master = new NailMaster(masterName);
-        return master.createDayShedule(date);
+    private List<Order> masterShedule;
+    private Map<Date, List<Order>> masterWeekShedule;
+    
+    public List<Order> getShedule(Date date) {
+        
+        return masterShedule;
     }
     
-    public Map<Date, Order> getMasterWeekShedule(String masterName, Date date) {
-        NailMaster master = new NailMaster(masterName);
-        return master.createWeekShedule(date);
+    public Map<Date, List<Order>> getWeekShedule(Date date) {
+        
+        return masterWeekShedule;
     }
     
     public void createOrder(String customerName, String customerPhone, Date date, NailService service) {
