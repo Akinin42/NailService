@@ -6,30 +6,35 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class FactoryDao {
+public class DAOFactory {
 
-    private static FactoryDao factory;
+    private static DAOFactory factory;
 
     private String user;
     private String password;
     private String url;
     private String driver;
 
-    public static FactoryDao getInstance() {
+    public static DAOFactory getInstance() {
         if (factory == null) {
-            factory = new FactoryDao();
+            factory = new DAOFactory();
         }
         return factory;
     }
 
-    private FactoryDao() {
+    private DAOFactory() {
         loadProperties();
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadProperties() {
         Properties properties = new Properties();
         try {
-            properties.load(FactoryDao.class.getResourceAsStream("/db.properties"));
+            properties.load(DAOFactory.class.getResourceAsStream("/db.properties"));
             user = properties.getProperty("username");
             password = properties.getProperty("password");
             url = properties.getProperty("url");
