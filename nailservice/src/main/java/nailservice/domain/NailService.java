@@ -5,16 +5,16 @@ import java.io.Serializable;
 public class NailService implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private int serviceId;
+    private Integer id;
     private String name;
     private int cost;
 
-    public int getServiceId() {
-        return serviceId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setId(int serviceId) {
+        this.id = serviceId;
     }
 
     public String getName() {
@@ -39,7 +39,7 @@ public class NailService implements Serializable {
         int result = 1;
         result = prime * result + cost;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + serviceId;
+        result = prime * result + id;
         return result;
     }
 
@@ -59,13 +59,13 @@ public class NailService implements Serializable {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (serviceId != other.serviceId)
+        if (id != other.id)
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "NailService [serviceId=" + serviceId + ", name=" + name + ", cost=" + cost + "]";
+        return "NailService [serviceId=" + id + ", name=" + name + ", cost=" + cost + "]";
     }
 }

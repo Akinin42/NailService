@@ -26,7 +26,7 @@ public class NailServiceDB {
             }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    service.setServiceId(generatedKeys.getInt(1));
+                    service.setId(generatedKeys.getInt(1));
                 } else {
                     throw new DAOException("Creating service failed, no generated key obtained.");
                 }
@@ -35,7 +35,7 @@ public class NailServiceDB {
             throw new DAOException(e);
         }
     }
-    
+
     public List<NailService> getAll() throws DAOException {
         List<NailService> services = new ArrayList<>();
         String sql = "SELECT service_id, name, cost FROM services ORDER BY service_id";
@@ -66,9 +66,26 @@ public class NailServiceDB {
         return service;
     }
 
+    public void update(NailService service) throws DAOException {
+        if (service.getId() == null) {
+            throw new IllegalArgumentException("NailService is not created yet.");
+        }
+        String sql = "UPDATE services SET name = ?, cost = ? WHERE service_id = ?";
+        Object[] values = { service.getName(), service.getCost(), service.getId() };
+        try (Connection connection = factory.getConnection();
+                PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, true, values);) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Updating nail service failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
     private NailService init(ResultSet resultSet) throws SQLException {
         NailService service = new NailService();
-        service.setServiceId(resultSet.getInt("service_id"));
+        service.setId(resultSet.getInt("service_id"));
         service.setName(resultSet.getString("name"));
         service.setCost(resultSet.getInt("cost"));
         return service;
