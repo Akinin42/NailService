@@ -26,7 +26,7 @@ public class CustomerDao {
             }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    customer.setCustomerId(generatedKeys.getInt(1));
+                    customer.setId(generatedKeys.getInt(1));
                 } else {
                     throw new DAOException("Creating customer failed, no generated key obtained.");
                 }
@@ -41,6 +41,20 @@ public class CustomerDao {
         String sql = "SELECT * FROM customers WHERE phone = ?";
         try (Connection connection = factory.getConnection();
                 PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, false, phone);
+                ResultSet resultSet = statement.executeQuery();) {
+            if (resultSet.next()) {
+                customer = init(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return customer;
+    }
+    public Customer getById(int id) throws DAOException {
+        Customer customer = null;
+        String sql = "SELECT * FROM customers WHERE customer_id = ?";
+        try (Connection connection = factory.getConnection();
+                PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, false, id);
                 ResultSet resultSet = statement.executeQuery();) {
             if (resultSet.next()) {
                 customer = init(resultSet);
@@ -68,7 +82,7 @@ public class CustomerDao {
 
     private Customer init(ResultSet resultSet) throws SQLException {
         Customer customer = new Customer();
-        customer.setCustomerId(resultSet.getInt("customer_id"));
+        customer.setId(resultSet.getInt("customer_id"));
         customer.setName(resultSet.getString("name"));
         customer.setPhone(resultSet.getString("phone"));
         return customer;

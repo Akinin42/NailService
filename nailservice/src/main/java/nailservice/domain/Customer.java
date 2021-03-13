@@ -8,11 +8,20 @@ public class Customer implements Serializable {
     private String name;
     private String phone;
 
-    public Integer getCustomerId() {
+    public Customer() {
+    }
+
+    public Customer(String name, String phone) {
+        super();
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public Integer getId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setId(int customerId) {
         this.customerId = customerId;
     }
 
