@@ -69,6 +69,22 @@ public class OrderDao {
         }
         return ordersOfDay;
     }
+    
+    public List<Order> getOrdersOfWeek(LocalDate startDate, LocalDate finishDate) throws DAOException {
+        List<Order> ordersOfDay = new ArrayList<>();
+        String sql = "SELECT order_id, date, time, customer_id, nailservice_id FROM orders WHERE date BETWEEN ? AND ? ORDER BY date, time";
+        Object[] values = { startDate, finishDate };
+        try (Connection connection = factory.getConnection();
+                PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, true, values);
+                ResultSet resultSet = statement.executeQuery();) {
+            while (resultSet.next()) {
+                ordersOfDay.add(init(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return ordersOfDay;
+    }
 
     private Order init(ResultSet resultSet) throws SQLException {
         CustomerDao customerDao = new CustomerDao();

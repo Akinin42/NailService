@@ -2,7 +2,6 @@ package nailservice.domain;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.List;
 
 import nailservice.dao.CustomerDao;
@@ -23,8 +22,10 @@ public class Administrator {
         return shedule;
     }
 
-    public List<Order> getWeekShedule(Calendar date) {
-
+    public List<Order> getWeekShedule(String inputDate) {
+        LocalDate startDate = LocalDate.parse(inputDate);
+        LocalDate finishDate = startDate.plusDays(7);
+        weekShedule = orderDao.getOrdersOfWeek(startDate, finishDate);
         return weekShedule;
     }
 
