@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import nailservice.domain.Order;
 
 public class OrderDao {
@@ -69,7 +70,7 @@ public class OrderDao {
         }
         return ordersOfDay;
     }
-    
+
     public List<Order> getOrdersOfWeek(LocalDate startDate, LocalDate finishDate) throws DAOException {
         List<Order> ordersOfDay = new ArrayList<>();
         String sql = "SELECT order_id, date, time, customer_id, nailservice_id FROM orders WHERE date BETWEEN ? AND ? ORDER BY date, time";
@@ -84,6 +85,21 @@ public class OrderDao {
             throw new DAOException(e);
         }
         return ordersOfDay;
+    }
+
+    public void delete(Order order) throws IllegalArgumentException, DAOException {
+        String sql = "DELETE FROM orders WHERE order_id = ?;";
+        try (Connection connection = factory.getConnection();
+                PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, true, order.getId());) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Deleting order failed, no rows affected.");
+            } else {
+                order.setId(null);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     private Order init(ResultSet resultSet) throws SQLException {

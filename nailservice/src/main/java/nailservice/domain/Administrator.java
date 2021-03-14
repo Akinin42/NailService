@@ -14,9 +14,9 @@ public class Administrator {
     private List<Order> weekShedule;
     private CustomerDao customerDao = new CustomerDao();
     private NailServiceDao serviceDao = new NailServiceDao();
-    private OrderDao orderDao = new OrderDao();    
+    private OrderDao orderDao = new OrderDao();
 
-    public List<Order> getShedule(String inputDate) {    
+    public List<Order> getShedule(String inputDate) {
         LocalDate date = LocalDate.parse(inputDate);
         shedule = orderDao.getOrdersOfDay(date);
         return shedule;
@@ -35,7 +35,7 @@ public class Administrator {
         if (customer == null) {
             customer = createCustomer(customerName, customerPhone);
         }
-        NailService service = serviceDao.getByName(nailService);       
+        NailService service = serviceDao.getByName(nailService);
         LocalDate date = LocalDate.parse(inputDate);
         LocalTime time = LocalTime.parse(inputTime);
         if (orderDao.getByTime(date, time) != null) {
@@ -43,6 +43,13 @@ public class Administrator {
         }
         Order order = new Order(date, time, customer, service);
         orderDao.insert(order);
+    }
+    
+    public void deleteOrder(String inputDate, String inputTime) {
+        LocalDate date = LocalDate.parse(inputDate);
+        LocalTime time = LocalTime.parse(inputTime);
+        Order order = orderDao.getByTime(date, time);
+        orderDao.delete(order);
     }
 
     private Customer createCustomer(String customerName, String customerPhone) {
