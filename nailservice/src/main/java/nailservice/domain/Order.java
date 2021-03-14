@@ -1,22 +1,22 @@
 package nailservice.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer id;
-    private Date date;
-    private Time time;
+    private LocalDate date;
+    private LocalTime time;
     private Customer customer;
     private NailService nailService;
 
     public Order() {
     }
 
-    public Order(Date date, Time time, Customer customer, NailService nailService) {
+    public Order(LocalDate date, LocalTime time, Customer customer, NailService nailService) {
         this.date = date;
         this.time = time;
         this.customer = customer;
@@ -31,19 +31,19 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -68,9 +68,7 @@ public class Order implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((customer == null) ? 0 : customer.hashCode());
-        result = prime * result + ((date == null) ? 0 : date.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((nailService == null) ? 0 : nailService.hashCode());
         return result;
     }
 
@@ -88,20 +86,10 @@ public class Order implements Serializable {
                 return false;
         } else if (!customer.equals(other.customer))
             return false;
-        if (date == null) {
-            if (other.date != null)
-                return false;
-        } else if (!date.equals(other.date))
-            return false;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
-            return false;
-        if (nailService == null) {
-            if (other.nailService != null)
-                return false;
-        } else if (!nailService.equals(other.nailService))
             return false;
         return true;
     }

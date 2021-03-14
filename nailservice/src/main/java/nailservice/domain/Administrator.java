@@ -1,32 +1,31 @@
 package nailservice.domain;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import nailservice.dao.CustomerDao;
 import nailservice.dao.NailServiceDao;
-import nailservice.dao.OrderDB;
+import nailservice.dao.OrderDao;
 
 public class Administrator {
 
-    private List<Order> masterShedule;
-    private Map<Calendar, List<Order>> masterWeekShedule;
+    private List<Order> shedule;
+    private List<Order> weekShedule;
     private CustomerDao customerDao = new CustomerDao();
     private NailServiceDao serviceDao = new NailServiceDao();
-    private OrderDB orderDao = new OrderDB();
+    private OrderDao orderDao = new OrderDao();    
 
-    public List<Order> getShedule(String inputDate) {
-        Date date = Date.valueOf(inputDate);
-        masterShedule = orderDao.getOrdersOfDay(date);
-        return masterShedule;
+    public List<Order> getShedule(String inputDate) {    
+        LocalDate date = LocalDate.parse(inputDate);
+        shedule = orderDao.getOrdersOfDay(date);
+        return shedule;
     }
 
-    public Map<Calendar, List<Order>> getWeekShedule(Calendar date) {
+    public List<Order> getWeekShedule(Calendar date) {
 
-        return masterWeekShedule;
+        return weekShedule;
     }
 
     public void createOrder(String customerName, String customerPhone, String inputDate, String inputTime,
@@ -35,9 +34,9 @@ public class Administrator {
         if (customer == null) {
             customer = createCustomer(customerName, customerPhone);
         }
-        NailService service = serviceDao.getByName(nailService);
-        Date date = Date.valueOf(inputDate);
-        Time time = Time.valueOf(inputTime);
+        NailService service = serviceDao.getByName(nailService);       
+        LocalDate date = LocalDate.parse(inputDate);
+        LocalTime time = LocalTime.parse(inputTime);
         if (orderDao.getByTime(date, time) != null) {
             throw new IllegalArgumentException("Sorry you can't get order on this time!");
         }

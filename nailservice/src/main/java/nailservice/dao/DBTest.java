@@ -34,9 +34,9 @@ public class DBTest {
          * new CustomerDao(); System.out.println(customerDao.getByPhone("114455146"));
          */
         Administrator admin = new Administrator();
-//        admin.createOrder("Petr", "777888555", "2021-03-08", "13:00:000", "manicur");
-//        admin.createOrder("Anastasia", "89236170788", "2021-03-08", "9:00:000", "manicur");
-//        admin.createOrder("Igor", "8951147856", "2021-03-08", "17:00:000", "pedicur");
+//        admin.createOrder("Petr", "777888555", "2021-03-08", "13:00:00", "manicur");
+//        admin.createOrder("Anastasia", "89236170788", "2021-03-08", "09:00:00", "manicur");
+        admin.createOrder("Igor", "8951147856", "2021-03-08", "17:00:00", "pedicur");
         System.out.println(admin.getShedule("2021-03-08"));
     }
 }
