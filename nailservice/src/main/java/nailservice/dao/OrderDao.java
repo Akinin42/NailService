@@ -103,8 +103,8 @@ public class OrderDao {
     }
 
     private Order init(ResultSet resultSet) throws SQLException {
-        CustomerDao customerDao = new CustomerDao();
-        NailServiceDao serviceDao = new NailServiceDao();
+        CustomerDao customerDao = factory.getCustomerDao();
+        NailServiceDao serviceDao = factory.getNailServiceDao();
         Order order = new Order();
         order.setId(resultSet.getInt("order_id"));
         order.setDate(resultSet.getObject("date", LocalDate.class));

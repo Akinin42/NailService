@@ -8,6 +8,15 @@ public class NailService implements Serializable {
     private Integer id;
     private String name;
     private int cost;
+    private int duration;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public Integer getId() {
         return id;

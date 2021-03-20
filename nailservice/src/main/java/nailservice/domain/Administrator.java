@@ -17,16 +17,14 @@ public class Administrator {
     private OrderDao orderDao = factory.getOrderDao();
 
     public List<Order> getShedule(String inputDate) {
-        LocalDate date = LocalDate.parse(inputDate);
-        List<Order> shedule = orderDao.getOrdersOfDay(date);
-        return shedule;
+        LocalDate date = LocalDate.parse(inputDate);        
+        return orderDao.getOrdersOfDay(date);
     }
 
     public List<Order> getWeekShedule(String inputDate) {
         LocalDate startDate = LocalDate.parse(inputDate);
-        LocalDate finishDate = startDate.plusDays(7);
-        List<Order> weekShedule = orderDao.getOrdersOfWeek(startDate, finishDate);
-        return weekShedule;
+        LocalDate finishDate = startDate.plusDays(7);        
+        return orderDao.getOrdersOfWeek(startDate, finishDate);
     }
 
     public void createOrder(String customerName, String customerPhone, String inputDate, String inputTime,

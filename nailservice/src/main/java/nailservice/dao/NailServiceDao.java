@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import nailservice.models.NailService;
 
 public class NailServiceDao {
@@ -14,11 +13,11 @@ public class NailServiceDao {
     private DAOFactory factory = DAOFactory.getInstance();
 
     public void insert(NailService service) throws IllegalArgumentException, DAOException {
-        String sql = "INSERT INTO services (name, cost) VALUES(?,?);";
+        String sql = "INSERT INTO services (name, cost, duration) VALUES(?,?,?);";
         if (getByName(service.getName()) != null) {
             throw new IllegalArgumentException("NailService is already created, y can only update it!");
         }
-        Object[] values = { service.getName(), service.getCost() };
+        Object[] values = { service.getName(), service.getCost(), service.getDuration() };
         try (Connection connection = factory.getConnection();
                 PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, true, values);) {
             int affectedRows = statement.executeUpdate();
@@ -66,6 +65,7 @@ public class NailServiceDao {
         }
         return service;
     }
+
     public NailService getById(int id) throws DAOException {
         NailService service = null;
         String sql = "SELECT * FROM services WHERE service_id = ?";
@@ -85,8 +85,8 @@ public class NailServiceDao {
         if (service.getId() == null) {
             throw new IllegalArgumentException("NailService is not created yet.");
         }
-        String sql = "UPDATE services SET name = ?, cost = ? WHERE service_id = ?";
-        Object[] values = { service.getName(), service.getCost(), service.getId() };
+        String sql = "UPDATE services SET name = ?, cost = ?, duration = ? WHERE service_id = ?";
+        Object[] values = { service.getName(), service.getCost(), service.getDuration(), service.getId() };
         try (Connection connection = factory.getConnection();
                 PreparedStatement statement = DAOUtil.prepareStatement(connection, sql, true, values);) {
             int affectedRows = statement.executeUpdate();
@@ -103,6 +103,7 @@ public class NailServiceDao {
         service.setId(resultSet.getInt("service_id"));
         service.setName(resultSet.getString("name"));
         service.setCost(resultSet.getInt("cost"));
+        service.setDuration(resultSet.getInt("duration"));
         return service;
     }
 }
