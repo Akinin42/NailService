@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import nailservice.domain.Order;
+import nailservice.models.Order;
 
 public class OrderDao {
 

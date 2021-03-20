@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import nailservice.domain.NailService;
+
+import nailservice.models.NailService;
 
 public class NailServiceDao {
 

@@ -1,6 +1,9 @@
 package nailservice.dao;
 
+import java.util.List;
+
 import nailservice.domain.Administrator;
+import nailservice.models.Order;
 
 public class DBTest {
 
@@ -36,7 +39,20 @@ public class DBTest {
         Administrator admin = new Administrator();
 //        admin.createOrder("Petr", "777888555", "2021-03-08", "13:00:00", "manicur");
 //        admin.createOrder("Anastasia", "89236170788", "2021-03-08", "09:00:00", "manicur");
-        admin.createOrder("Igor", "8951147856", "2021-03-08", "17:00:00", "pedicur");
-        System.out.println(admin.getShedule("2021-03-08"));
+//        admin.createOrder("Igor", "8951147856", "2021-03-08", "17:00:00", "pedicur");
+//        admin.createOrder("Igor", "8951147856", "2021-03-10", "17:00:00", "pedicur");
+//        admin.createOrder("Igor", "8951147856", "2021-03-11", "17:00:00", "pedicur");
+//        admin.createOrder("Igor", "8951147856", "2021-03-12", "17:00:00", "pedicur");
+//        admin.createOrder("Igor", "8951147856", "2021-03-14", "17:00:00", "pedicur");
+//        System.out.println(admin.getShedule("2021-03-08"));
+        List<Order> weekShedule = admin.getWeekShedule("2021-03-08");
+        for(Order order:weekShedule) {
+            System.out.println(order);
+        }
+        admin.deleteOrder("2021-03-10", "17:00:00");
+        weekShedule = admin.getWeekShedule("2021-03-08");
+        for(Order order:weekShedule) {
+            System.out.println(order);
+        }
     }
 }

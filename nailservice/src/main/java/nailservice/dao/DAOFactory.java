@@ -52,4 +52,16 @@ public class DAOFactory {
         }
     }
 
+    public CustomerDao getCustomerDao() {
+        return new CustomerDao();
+    }
+
+    public NailServiceDao getNailServiceDao() {
+        return new NailServiceDao();
+    }
+
+    public OrderDao getOrderDao() {
+        return new OrderDao();
+    }
+
 }

@@ -1,4 +1,4 @@
-package nailservice.domain;
+package nailservice.models;
 
 import java.io.Serializable;
 
