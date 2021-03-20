@@ -12,35 +12,41 @@ import nailservice.models.Order;
 public class SheduleCreator {
 
     private DAOFactory factory = DAOFactory.getInstance();
+    private Map<LocalTime, String> shedule = new LinkedHashMap<>();
+    private static final int START_WORK = 9;
+    private static final int END_WORK = 20;
+    private static final int AVERAGE_SERVICE_TIME = 2;
+    private int timeLimit = START_WORK;
 
     public Map<LocalTime, String> createShedule(String inputDate) {
-        Map<LocalTime, String> shedule = new LinkedHashMap<>();
         List<Order> orders = getOrders(inputDate);
-        int timeLimit = 9;
         if (orders.isEmpty()) {
-            while (timeLimit < 20) {
-                shedule.put(LocalTime.parse(String.format("%02d:00:00", timeLimit)), "free");
-                timeLimit = timeLimit + 2;
+            while (timeLimit < END_WORK) {
+                addFreeLine();
             }
         }
         for (Order order : orders) {
             while (true) {
                 if (order.getTime().getHour() >= timeLimit && (order.getTime().getHour() - timeLimit) > 1) {
-                    shedule.put(LocalTime.parse(String.format("%02d:00:00", timeLimit)), "free");
-                    timeLimit = timeLimit + 2;
+                    addFreeLine();
                 } else {
                     shedule.put(order.getTime(), order.getCustomer().getName());
-                    timeLimit = (int) (order.getTime().getHour()
-                            + (Math.ceil(((double) order.getNailService().getDuration() / 60))));
+                    int serviceDuration = (int) Math.ceil(((double) order.getNailService().getDuration() / 60));
+                    timeLimit = (order.getTime().getHour() + serviceDuration);
                     break;
                 }
             }
 
         }
-        if (timeLimit < 20) {
-            shedule.put(LocalTime.parse(String.format("%02d:00:00", timeLimit)), "free");
+        if (timeLimit < END_WORK) {
+            addFreeLine();
         }
         return shedule;
+    }
+
+    private void addFreeLine() {
+        shedule.put(LocalTime.parse(String.format("%02d:00:00", timeLimit)), "free");
+        timeLimit = timeLimit + AVERAGE_SERVICE_TIME;
     }
 
     private List<Order> getOrders(String inputDate) {
