@@ -16,14 +16,9 @@ public class Administrator {
     private DAOFactory factory = DAOFactory.getInstance();
     private OrderDao orderDao = factory.getOrderDao();
 
-    public List<Order> getShedule(String inputDate) {
-        LocalDate date = LocalDate.parse(inputDate);        
-        return orderDao.getOrdersOfDay(date);
-    }
-
-    public List<Order> getWeekShedule(String inputDate) {
+    public List<Order> getWeekOrders(String inputDate) {
         LocalDate startDate = LocalDate.parse(inputDate);
-        LocalDate finishDate = startDate.plusDays(7);        
+        LocalDate finishDate = startDate.plusDays(7);
         return orderDao.getOrdersOfWeek(startDate, finishDate);
     }
 
