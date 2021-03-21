@@ -12,19 +12,16 @@ import nailservice.models.Order;
 public class SheduleCreator {
 
     private DAOFactory factory = DAOFactory.getInstance();
-    private Map<LocalTime, String> shedule = new LinkedHashMap<>();
+    private Map<LocalTime, String> shedule;
     private static final int START_WORK = 9;
     private static final int END_WORK = 20;
     private static final int AVERAGE_SERVICE_TIME = 2;
-    private int timeLimit = START_WORK;
+    private int timeLimit;
 
     public Map<LocalTime, String> createShedule(String inputDate) {
         List<Order> orders = getOrders(inputDate);
-        if (orders.isEmpty()) {
-            while (timeLimit < END_WORK) {
-                addFreeLine();
-            }
-        }
+        shedule = new LinkedHashMap<>();
+        timeLimit = START_WORK;
         for (Order order : orders) {
             while (true) {
                 if (order.getTime().getHour() >= timeLimit && (order.getTime().getHour() - timeLimit) > 1) {
@@ -36,12 +33,23 @@ public class SheduleCreator {
                     break;
                 }
             }
-
         }
-        if (timeLimit < END_WORK) {
+        while (timeLimit < END_WORK) {
             addFreeLine();
         }
         return shedule;
+    }
+
+    public Map<LocalDate, Map<LocalTime, String>> createWeekShedule(String inputDate) {
+        Map<LocalDate, Map<LocalTime, String>> weekShedule = new LinkedHashMap<>();
+        int dayCounter = 0;
+        while (dayCounter < 7) {
+            LocalDate date = LocalDate.parse(inputDate).plusDays(dayCounter);
+            Map<LocalTime, String> dayShedule = createShedule(date.toString());
+            weekShedule.put(date, dayShedule);
+            dayCounter++;
+        }
+        return weekShedule;
     }
 
     private void addFreeLine() {
