@@ -1,21 +1,13 @@
 package nailservice.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer customerId;
     private String name;
     private String phone;
-
-    public Customer() {
-    }
-
-    public Customer(String name, String phone) {
-        super();
-        this.name = name;
-        this.phone = phone;
-    }
 
     public Integer getId() {
         return customerId;
@@ -43,36 +35,19 @@ public class Customer implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + customerId;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-        return result;
+        return Objects.hash(customerId, name, phone);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (!(obj instanceof Customer)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
         Customer other = (Customer) obj;
-        if (customerId != other.customerId)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (phone == null) {
-            if (other.phone != null)
-                return false;
-        } else if (!phone.equals(other.phone))
-            return false;
-        return true;
+        return (Objects.equals(customerId, other.customerId) && Objects.equals(phone, other.phone));
     }
 
     @Override

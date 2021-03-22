@@ -49,7 +49,10 @@ public class Administrator {
 
     private Customer createCustomer(String customerName, String customerPhone) {
         CustomerDao customerDao = factory.getCustomerDao();
-        customerDao.insert(new Customer(customerName, customerPhone));
+        Customer customer = new Customer();
+        customer.setName(customerName);
+        customer.setPhone(customerPhone);
+        customerDao.insert(customer);
         return customerDao.getByPhone(customerPhone);
     }
 }

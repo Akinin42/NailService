@@ -1,22 +1,15 @@
 package nailservice.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class NailService implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String name;
-    private int cost;
-    private int duration;
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+    private Integer cost;
+    private Integer duration;
 
     public Integer getId() {
         return id;
@@ -34,7 +27,7 @@ public class NailService implements Serializable {
         this.name = name;
     }
 
-    public int getCost() {
+    public Integer getCost() {
         return cost;
     }
 
@@ -42,35 +35,29 @@ public class NailService implements Serializable {
         this.cost = cost;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + cost;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + id;
-        return result;
+        return Objects.hash(id, name, cost, duration);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (!(obj instanceof NailService)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
         NailService other = (NailService) obj;
-        if (cost != other.cost)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (id != other.id)
-            return false;
-        return true;
+        return (Objects.equals(id, other.id)&&Objects.equals(name, other.name)&&Objects.equals(cost, other.cost));
     }
 
     @Override
