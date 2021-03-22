@@ -57,7 +57,7 @@ public class NailService implements Serializable {
             return false;
         }
         NailService other = (NailService) obj;
-        return (Objects.equals(id, other.id)&&Objects.equals(name, other.name)&&Objects.equals(cost, other.cost));
+        return (Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(cost, other.cost));
     }
 
     @Override
