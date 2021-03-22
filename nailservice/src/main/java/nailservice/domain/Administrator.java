@@ -36,7 +36,11 @@ public class Administrator {
         if (orderDao.getByTime(date, time) != null) {
             throw new IllegalArgumentException("Sorry you can't get order on this time!");
         }
-        Order order = new Order(date, time, customer, service);
+        Order order = new Order();
+        order.setDate(date);
+        order.setTime(time);
+        order.setNailService(service);
+        order.setCustomer(customer);
         orderDao.insert(order);
     }
 
