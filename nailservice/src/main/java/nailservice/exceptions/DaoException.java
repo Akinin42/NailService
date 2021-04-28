@@ -1,18 +1,18 @@
-package nailservice.dao;
+package nailservice.exceptions;
 
-public class DAOException extends RuntimeException {
+public class DaoException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public DAOException(String message, Throwable cause) {
+    public DaoException(String message, Throwable cause) {
         super(message, cause);        
     }
 
-    public DAOException(String message) {
+    public DaoException(String message) {
         super(message);       
     }
 
-    public DAOException(Throwable cause) {
+    public DaoException(Throwable cause) {
         super(cause);        
     }
 }
