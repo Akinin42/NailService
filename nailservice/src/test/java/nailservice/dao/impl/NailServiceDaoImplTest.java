@@ -32,7 +32,12 @@ class NailServiceDaoImplTest {
     @Test
     void save_ShouldSaveNailServiceToDB_WhenInputValidNailService() {
         int numberRowBeforeSave = TestUtil.getNumberRow("SELECT COUNT(*) FROM services;");
-        NailService nailService = NailService.builder().withId(5).withName("test service").withCost(1).withDuration(10).build();
+        NailService nailService = NailService.builder()
+                .withId(5)
+                .withName("test service")
+                .withCost(1)
+                .withDuration(10)
+                .build();
         nailServiceDao.save(nailService);
         int numberRowAfterSave = TestUtil.getNumberRow("SELECT COUNT(*) FROM services;");
         assertEquals(numberRowBeforeSave + 1, numberRowAfterSave);
@@ -40,7 +45,12 @@ class NailServiceDaoImplTest {
 
     @Test
     void save_ShouldThrowDaoException_WhenInputInvalidCustomer() {
-        NailService invalidNailService = NailService.builder().withId(5).withName(null).withCost(1).withDuration(10).build();               
+        NailService invalidNailService = NailService.builder()
+                .withId(5)
+                .withName(null)
+                .withCost(1)
+                .withDuration(10)
+                .build();               
         assertThrows(DaoException.class, () -> nailServiceDao.save(invalidNailService));
     }
     
@@ -140,9 +150,14 @@ class NailServiceDaoImplTest {
     }
     
     @Test
-    void update_ShouldUpdateNailService_WhenInputNailServiceExistsInDB(){
-        NailService expected = NailService.builder().withId(1).withName("Manicure").withCost(1500).withDuration(60).build();
-        NailService serviceForUpdate = NailService.builder().withId(1).withName("Manicure").withCost(1500).withDuration(60).build();
+    void update_ShouldUpdateNailService_WhenInputNailServiceExistsInDB(){        
+        NailService serviceForUpdate = NailService.builder()
+                .withId(1)
+                .withName("Manicure")
+                .withCost(1500)
+                .withDuration(60)
+                .build();
+        NailService expected = serviceForUpdate;
         nailServiceDao.update(serviceForUpdate);
         NailService actual = nailServiceDao.findById(1).get();
         assertEquals(expected, actual);
@@ -151,17 +166,31 @@ class NailServiceDaoImplTest {
     @Test
     void update_ShouldThrowDaoException_WhenConnectNull(){
         NailServiceDaoImpl nailServiceDaoWithoutConnector = new NailServiceDaoImpl(null);
-        NailService serviceForUpdate = NailService.builder().withId(1).withName("Manicure").withCost(1500).withDuration(60).build();
+        NailService serviceForUpdate = NailService.builder()
+                .withId(1)
+                .withName("Manicure")
+                .withCost(1500)
+                .withDuration(60)
+                .build();
         assertThrows(DaoException.class, () -> nailServiceDaoWithoutConnector.update(serviceForUpdate));
     }
     
     private List<NailService> createNailServices() {
         List<NailService> nailServices = new ArrayList<>();
-        NailService nailService = NailService.builder().withId(1).withName("Manicure").withCost(800).withDuration(120).build();
+        NailService nailService = NailService.builder()
+                .withId(1)
+                .withName("Manicure")
+                .withCost(800)
+                .withDuration(120)
+                .build();
         nailServices.add(nailService);
-        nailService = NailService.builder().withId(2).withName("Pedicure").withCost(1000).withDuration(90).build();
+        nailService = NailService.builder()
+                .withId(2)
+                .withName("Pedicure")
+                .withCost(1000)
+                .withDuration(90)
+                .build();
         nailServices.add(nailService);
         return nailServices;
     }
-
 }

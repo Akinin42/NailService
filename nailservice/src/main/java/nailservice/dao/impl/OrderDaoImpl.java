@@ -78,7 +78,7 @@ public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
     }    
 
     @Override
-    protected void insert(PreparedStatement statement, Order order) throws SQLException {        
+    protected void insert(PreparedStatement statement, Order order) throws SQLException, NullPointerException {        
         statement.setObject(1, order.getDate());
         statement.setObject(2, order.getTime());
         statement.setInt(3, order.getCustomer().getId());
