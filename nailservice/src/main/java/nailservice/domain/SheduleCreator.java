@@ -21,8 +21,8 @@ public class SheduleCreator {
         this.orderDao = orderDao;
     }
 
-    public Map<LocalTime, String> createShedule(String inputDate) {
-        List<Order> orders = getOrders(inputDate);
+    public Map<LocalTime, String> createDailyShedule(String inputDate) {
+        List<Order> orders = getDailyOrders(inputDate);
         shedule = new LinkedHashMap<>();
         timeLimit = START_WORK;
         for (Order order : orders) {
@@ -48,7 +48,7 @@ public class SheduleCreator {
         int dayCounter = 0;
         while (dayCounter < 7) {
             LocalDate date = LocalDate.parse(inputDate).plusDays(dayCounter);
-            Map<LocalTime, String> dayShedule = createShedule(date.toString());
+            Map<LocalTime, String> dayShedule = createDailyShedule(date.toString());
             weekShedule.put(date, dayShedule);
             dayCounter++;
         }
@@ -60,7 +60,7 @@ public class SheduleCreator {
         timeLimit = timeLimit + AVERAGE_SERVICE_TIME;
     }
 
-    private List<Order> getOrders(String inputDate) {        
+    private List<Order> getDailyOrders(String inputDate) {        
         LocalDate date = LocalDate.parse(inputDate);
         return orderDao.findAllOfDay(date);
     }

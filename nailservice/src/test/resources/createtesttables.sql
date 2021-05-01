@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS customers CASCADE;
+CREATE TABLE customers(
+customer_id IDENTITY NOT NULL PRIMARY KEY,
+name VARCHAR(128) NOT NULL,
+phone VARCHAR(24) NOT NULL
+);
+DROP TABLE IF EXISTS services CASCADE;
+CREATE TABLE services(
+service_id IDENTITY NOT NULL PRIMARY KEY,
+name VARCHAR(128) NOT NULL,
+cost INT NOT NULL,
+duration INT NOT NULL
+);
+DROP TABLE IF EXISTS orders CASCADE;
+CREATE TABLE orders(
+order_id IDENTITY NOT NULL PRIMARY KEY,
+order_date DATE NOT NULL,
+order_time TIME NOT NULL,
+customer_id INT NOT NULL,
+nailservice_id INT NOT NULL,
+CONSTRAINT FK_customer_id FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
+CONSTRAINT FK_nailservice_id FOREIGN KEY (nailservice_id) REFERENCES services (service_id) ON DELETE CASCADE,
+);
+INSERT INTO customers VALUES(1,'Anna','89234567788');
+INSERT INTO customers VALUES(2,'Elena','89234561122');
+INSERT INTO customers VALUES(3,'Igor','89234564443');
+INSERT INTO services VALUES(1,'Manicure',800,120);
+INSERT INTO services VALUES(2,'Pedicure',1000,90);
+INSERT INTO orders VALUES(1,'2021-05-01','11:00:00',1,1);
+INSERT INTO orders VALUES(2,'2021-05-03','09:00:00',3,2);

@@ -30,10 +30,12 @@ public class NailServiceLauncher {
         CustomerDao customerDao = new CustomerDaoImpl(connector);
         NailServiceDao nailServiceDao = new NailServiceDaoImpl(connector);
         Administrator administrator = new Administrator(orderDao, customerDao, nailServiceDao);
-        NailService manicur = NailService.builder().withName("Manicur").withCost(800).withDuration(120).build();
-        nailServiceDao.save(manicur);
-        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "11:00:00", "Manicur");
-        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "15:00:00", "Manicur");
-        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "17:00:00", "Manicur");
+        NailService manicure = NailService.builder().withName("Manicure").withCost(800).withDuration(120).build();
+        NailService pedicure = NailService.builder().withName("Pedicure").withCost(1000).withDuration(90).build();
+        nailServiceDao.save(manicure);
+        nailServiceDao.save(pedicure);
+        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "11:00:00", "Manicure");
+        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "15:00:00", "Manicure");
+        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "17:00:00", "Manicure");
     }
 }
