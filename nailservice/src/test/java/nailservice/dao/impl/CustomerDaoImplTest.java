@@ -75,7 +75,7 @@ class CustomerDaoImplTest {
     void findById_ShouldThrowDaoException_WhenConnectNull() {
         CustomerDaoImpl customerDaoWithoutConnector = new CustomerDaoImpl(null);
         assertThrows(DaoException.class, () -> customerDaoWithoutConnector.findById(1));
-    }  
+    }
     
     @Test
     void findAll_ShouldReturnExpectedCustomers_WhenCustomersTableNotEmpty() {
