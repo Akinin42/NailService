@@ -30,22 +30,30 @@ class CustomerDaoImplTest {
     }
 
     @Test
-    void saveShouldSaveCustomerToDB_WhenInputValidCustomer() {
+    void save_ShouldSaveCustomerToDB_WhenInputValidCustomer() {
         int numberRowBeforeSave = TestUtil.getNumberRow("SELECT COUNT(*) FROM customers;");
-        Customer customer = Customer.builder().withId(4).withName("Ivan").withPhone("78556447721").build();
+        Customer customer = Customer.builder()
+                .withId(4)
+                .withName("Ivan")
+                .withPhone("78556447721")
+                .build();
         customerDao.save(customer);
         int numberRowAfterSave = TestUtil.getNumberRow("SELECT COUNT(*) FROM customers;");
         assertEquals(numberRowBeforeSave + 1, numberRowAfterSave);
     }
 
     @Test
-    void saveShouldThrowDaoException_WhenInputInvalidCustomer() {
-        Customer invalidCustomer = Customer.builder().withId(0).withName(null).withPhone("78556447721").build();
+    void save_ShouldThrowDaoException_WhenInputInvalidCustomer() {
+        Customer invalidCustomer = Customer.builder()
+                .withId(0)
+                .withName(null)
+                .withPhone("78556447721")
+                .build();
         assertThrows(DaoException.class, () -> customerDao.save(invalidCustomer));
     }
     
     @Test
-    void saveShouldThrowDaoException_WhenInputNull() {
+    void save_ShouldThrowDaoException_WhenInputNull() {
         assertThrows(DaoException.class, () -> customerDao.save(null));
     }
     
@@ -57,11 +65,17 @@ class CustomerDaoImplTest {
     }
     
     @Test
-    void findById_ShouldReturnExpectedCourse_WhenInputExistentId() {
-        Customer expected = Customer.builder().withId(1).withName("Anna").withPhone("89234567788").build();
+    void findById_ShouldReturnExpectedCustomer_WhenInputExistentId() {
+        Customer expected = createCustomers().get(0);
         Customer actual = customerDao.findById(1).get();
         assertEquals(expected, actual);
     }
+    
+    @Test
+    void findById_ShouldThrowDaoException_WhenConnectNull() {
+        CustomerDaoImpl customerDaoWithoutConnector = new CustomerDaoImpl(null);
+        assertThrows(DaoException.class, () -> customerDaoWithoutConnector.findById(1));
+    }  
     
     @Test
     void findAll_ShouldReturnExpectedCustomers_WhenCustomersTableNotEmpty() {
@@ -106,18 +120,53 @@ class CustomerDaoImplTest {
         int numberRowAfterDelete = TestUtil.getNumberRow("SELECT COUNT(*) FROM customers;");
         assertEquals(numberRowBeforeDelete - 1, numberRowAfterDelete);
     }
+    
+    @Test
+    void deleteById_ShouldThrowDaoException_WhenConnectNull() {
+        CustomerDaoImpl customerDaoWithoutConnector = new CustomerDaoImpl(null);
+        assertThrows(DaoException.class, () -> customerDaoWithoutConnector.deleteById(1));
+    }
+    
+    @Test
+    void findByPhone_ShouldReturnExpectedCourse_WhenInputExistentPhone() {
+        Customer expected = createCustomers().get(0);
+        Customer actual = customerDao.findByPhone("89234567788").get();
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    void findByPhone_ShouldReturnEmptyOptional_WhenInputPhoneNotExists() {
+        Optional<Customer> expected = Optional.empty();
+        Optional<Customer> actual = customerDao.findByPhone("not exist phone");
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    void findByPhone_ShouldThrowDaoException_WhenConnectNull() {
+        CustomerDaoImpl customerDaoWithoutConnector = new CustomerDaoImpl(null);
+        assertThrows(DaoException.class, () -> customerDaoWithoutConnector.findByPhone("89234567788"));
+    }    
 
     private List<Customer> createCustomers() {
         List<Customer> customers = new ArrayList<>();
-        Customer customer = Customer.builder().withId(1).withName("Anna").withPhone("89234567788").build();
+        Customer customer = Customer.builder()
+                .withId(1)
+                .withName("Anna")
+                .withPhone("89234567788")
+                .build();
         customers.add(customer);
-        customer = Customer.builder().withId(2).withName("Elena").withPhone("89234561122").build();
+        customer = Customer.builder()
+                .withId(2)
+                .withName("Elena")
+                .withPhone("89234561122")
+                .build();
         customers.add(customer);
-        customer = Customer.builder().withId(3).withName("Igor").withPhone("89234564443").build();
+        customer = Customer.builder()
+                .withId(3)
+                .withName("Igor")
+                .withPhone("89234564443")
+                .build();
         customers.add(customer);
         return customers;
-    }
-    
-    
-
+    }    
 }

@@ -106,12 +106,18 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>BUNDLE</element>
+                                    <element>CLASS</element>
+                                    <excludes>
+                                        <exclude>*Customer</exclude>
+                                        <exclude>*NailService</exclude>
+                                        <exclude>*Order</exclude>
+                                        <exclude>*NailServiceLauncher</exclude>
+                                    </excludes>
                                     <limits>
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.90</minimum>
+                                            <minimum>1.00</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
