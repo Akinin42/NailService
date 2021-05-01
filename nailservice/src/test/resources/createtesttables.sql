@@ -19,7 +19,7 @@ order_time TIME NOT NULL,
 customer_id INT NOT NULL,
 nailservice_id INT NOT NULL,
 CONSTRAINT FK_customer_id FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE,
-CONSTRAINT FK_nailservice_id FOREIGN KEY (nailservice_id) REFERENCES services (service_id) ON DELETE CASCADE,
+CONSTRAINT FK_nailservice_id FOREIGN KEY (nailservice_id) REFERENCES services (service_id) ON DELETE CASCADE
 );
 INSERT INTO customers VALUES(1,'Anna','89234567788');
 INSERT INTO customers VALUES(2,'Elena','89234561122');
