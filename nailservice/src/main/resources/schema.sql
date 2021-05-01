@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS customers CASCADE;
+CREATE TABLE customers(
+customer_id SERIAL PRIMARY KEY,
+name VARCHAR(128) NOT NULL,
+phone VARCHAR(24) NOT NULL
+);
+DROP TABLE IF EXISTS services CASCADE;
+CREATE TABLE services(
+service_id SERIAL PRIMARY KEY,
+name VARCHAR(128) NOT NULL,
+cost INT NOT NULL,
+duration INT NOT NULL
+);
+DROP TABLE IF EXISTS orders CASCADE;
+CREATE TABLE orders(
+order_id SERIAL PRIMARY KEY,
+order_date DATE NOT NULL,
+order_time TIME NOT NULL,
+customer_id INT REFERENCES customers (customer_id) ON DELETE CASCADE,
+nailservice_id INT REFERENCES services (service_id) ON DELETE CASCADE
+);

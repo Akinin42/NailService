@@ -30,11 +30,14 @@ public class Administrator {
     }
 
     public void createOrder(String customerName, String customerPhone, String inputDate, String inputTime,
-            String nailServiceName) {        
-        Customer customer = customerDao.findByPhone(customerPhone).get();
-        if (customer.equals(Optional.empty())) {
+            String nailServiceName) {
+        Customer customer = null;
+        Optional<Customer> value = customerDao.findByPhone(customerPhone);
+        if(value.isPresent()) {
+            customer = customerDao.findByPhone(customerPhone).get();
+        } else {
             customer = createCustomer(customerName, customerPhone);
-        }
+        }        
         NailService nailService = nailServiceDao.findByName(nailServiceName).get();
         LocalDate date = LocalDate.parse(inputDate);
         LocalTime time = LocalTime.parse(inputTime);

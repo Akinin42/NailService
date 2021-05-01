@@ -36,10 +36,9 @@ public class CustomerDaoImpl extends AbstractCrudImpl<Customer> implements Custo
     }
 
     @Override
-    protected void insert(PreparedStatement statement, Customer customer) throws SQLException {
-        statement.setInt(1, customer.getId());
-        statement.setString(2, customer.getName());
-        statement.setString(3, customer.getPhone());        
+    protected void insert(PreparedStatement statement, Customer customer) throws SQLException {        
+        statement.setString(1, customer.getName());
+        statement.setString(2, customer.getPhone());        
     }
 
     @Override

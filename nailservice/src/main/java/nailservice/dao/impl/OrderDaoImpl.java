@@ -18,14 +18,14 @@ import nailservice.exceptions.DaoException;
 
 public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
 
-    private static final String SAVE_QUERY = "INSERT INTO orders (date, time, customer_id, nailservice_id) VALUES(?,?,?,?);";
+    private static final String SAVE_QUERY = "INSERT INTO orders (order_date, order_time, customer_id, nailservice_id) VALUES(?,?,?,?);";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM orders WHERE order_id = ?;";
     private static final String FIND_ALL_QUERY = "SELECT * FROM orders ORDER BY order_id;";
     private static final String FIND_ALL_PAGINATION_QUERY = "SELECT * FROM orders ORDER BY order_id LIMIT ? OFFSET ?;";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM orders WHERE order_id = ?;";
-    private static final String FIND_BY_TIME_QUERY = "SELECT * FROM orders WHERE date = ? AND time = ?;";
-    private static final String FIND_ALL_BY_DAY_QUERY = "SELECT * FROM orders WHERE date = ? ORDER BY time;";
-    private static final String FIND_ALL_BY_WEEK_QUERY = "SELECT * FROM orders WHERE date BETWEEN ? AND ? ORDER BY date, time;";
+    private static final String FIND_BY_TIME_QUERY = "SELECT * FROM orders WHERE order_date = ? AND order_time = ?;";
+    private static final String FIND_ALL_BY_DAY_QUERY = "SELECT * FROM orders WHERE order_date = ? ORDER BY order_time;";
+    private static final String FIND_ALL_BY_WEEK_QUERY = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ? ORDER BY order_date, order_time;";
 
     public OrderDaoImpl(Connector connector) {
         super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, FIND_ALL_PAGINATION_QUERY, DELETE_BY_ID_QUERY);
@@ -78,12 +78,11 @@ public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
     }    
 
     @Override
-    protected void insert(PreparedStatement statement, Order order) throws SQLException {
-        statement.setInt(1, order.getId());
-        statement.setObject(2, order.getDate());
-        statement.setObject(3, order.getTime());
-        statement.setObject(4, order.getCustomer());
-        statement.setObject(5, order.getNailService());
+    protected void insert(PreparedStatement statement, Order order) throws SQLException {        
+        statement.setObject(1, order.getDate());
+        statement.setObject(2, order.getTime());
+        statement.setInt(3, order.getCustomer().getId());
+        statement.setInt(4, order.getNailService().getId());
     }
 
     @Override
@@ -91,8 +90,8 @@ public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
         CustomerDao customerDao = new CustomerDaoImpl(connector);
         NailServiceDao nailServiceDao = new NailServiceDaoImpl(connector);
         return Order.builder().withId(resultSet.getInt("order_id"))
-                .withDate(resultSet.getObject("date", LocalDate.class))
-                .withTime(resultSet.getObject("time", LocalTime.class))
+                .withDate(resultSet.getObject("order_date", LocalDate.class))
+                .withTime(resultSet.getObject("order_time", LocalTime.class))
                 .withCustomer(customerDao.findById(resultSet.getInt("customer_id")).get())
                 .withNailService(nailServiceDao.findById(resultSet.getInt("nailservice_id")).get())
                 .build();

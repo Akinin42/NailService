@@ -5,18 +5,21 @@ import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import nailservice.dao.DAOFactory;
 import nailservice.dao.OrderDao;
-import nailservice.models.Order;
+import nailservice.entity.Order;
 
 public class SheduleCreator {
-
-    private DAOFactory factory = DAOFactory.getInstance();
+    
+    private final OrderDao orderDao;
     private Map<LocalTime, String> shedule;
     private static final int START_WORK = 9;
     private static final int END_WORK = 20;
     private static final int AVERAGE_SERVICE_TIME = 2;
-    private int timeLimit;
+    private int timeLimit;    
+
+    public SheduleCreator(OrderDao orderDao) {        
+        this.orderDao = orderDao;
+    }
 
     public Map<LocalTime, String> createShedule(String inputDate) {
         List<Order> orders = getOrders(inputDate);
@@ -57,9 +60,8 @@ public class SheduleCreator {
         timeLimit = timeLimit + AVERAGE_SERVICE_TIME;
     }
 
-    private List<Order> getOrders(String inputDate) {
-        OrderDao orderDao = factory.getOrderDao();
+    private List<Order> getOrders(String inputDate) {        
         LocalDate date = LocalDate.parse(inputDate);
-        return orderDao.getOrdersOfDay(date);
+        return orderDao.findAllOfDay(date);
     }
 }

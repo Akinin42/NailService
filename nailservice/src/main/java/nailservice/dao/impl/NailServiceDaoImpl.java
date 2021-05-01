@@ -50,11 +50,10 @@ public class NailServiceDaoImpl extends AbstractCrudImpl<NailService> implements
     }
 
     @Override
-    protected void insert(PreparedStatement statement, NailService nailService) throws SQLException {
-        statement.setInt(1, nailService.getId());
-        statement.setString(2, nailService.getName());
-        statement.setInt(3, nailService.getCost());
-        statement.setInt(4, nailService.getDuration());        
+    protected void insert(PreparedStatement statement, NailService nailService) throws SQLException {        
+        statement.setString(1, nailService.getName());
+        statement.setInt(2, nailService.getCost());
+        statement.setInt(3, nailService.getDuration());        
     }
 
     @Override
