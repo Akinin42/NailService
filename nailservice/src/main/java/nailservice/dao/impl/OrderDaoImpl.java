@@ -65,7 +65,7 @@ public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
         try (Connection connection = connector.getConnection();
                 PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_WEEK_QUERY)) {
             statement.setObject(1, startDate);
-            statement.setObject(1, finishDate);
+            statement.setObject(2, finishDate);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     ordersOfDay.add(createEntityFromResultSet(resultSet));
