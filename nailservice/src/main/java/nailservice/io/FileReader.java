@@ -8,9 +8,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.springframework.stereotype.Component;
 import nailservice.exceptions.NoFileException;
 
-
+@Component
 public class FileReader {
 
     public List<String> read(String fileName) {

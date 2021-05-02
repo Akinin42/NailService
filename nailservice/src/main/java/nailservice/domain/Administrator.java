@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 import nailservice.dao.CustomerDao;
 import nailservice.dao.NailServiceDao;
 import nailservice.dao.OrderDao;
@@ -11,6 +12,7 @@ import nailservice.entity.Customer;
 import nailservice.entity.NailService;
 import nailservice.entity.Order;
 
+@Component
 public class Administrator {
     
     private final OrderDao orderDao;

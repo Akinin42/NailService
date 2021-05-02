@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 import nailservice.dao.Connector;
 import nailservice.dao.CustomerDao;
 import nailservice.entity.Customer;
 import nailservice.exceptions.DaoException;
 
+@Component
 public class CustomerDaoImpl extends AbstractCrudImpl<Customer> implements CustomerDao {
     
     private static final String SAVE_QUERY = "INSERT INTO customers (name, phone) VALUES(?,?);";

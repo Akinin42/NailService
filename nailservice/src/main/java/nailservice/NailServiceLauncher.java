@@ -2,7 +2,7 @@ package nailservice;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import nailservice.context.ApplicationContextInjector;
+
 import nailservice.dao.NailServiceDao;
 import nailservice.dao.ScriptExecutor;
 import nailservice.domain.Administrator;
@@ -24,6 +24,6 @@ public class NailServiceLauncher {
         nailServiceDao.save(pedicure);
         administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "11:00:00", "Manicure");
         administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "15:00:00", "Manicure");
-        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "17:00:00", "Manicure");
+        administrator.createOrder("Igor Akinin", "89236170788", "2021-05-01", "17:00:00", "Manicure");        
     }
 }

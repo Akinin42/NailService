@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 import nailservice.dao.Connector;
 import nailservice.dao.CustomerDao;
 import nailservice.dao.NailServiceDao;
@@ -16,6 +17,7 @@ import nailservice.dao.OrderDao;
 import nailservice.entity.Order;
 import nailservice.exceptions.DaoException;
 
+@Component
 public class OrderDaoImpl extends AbstractCrudImpl<Order> implements OrderDao {
 
     private static final String SAVE_QUERY = "INSERT INTO orders (order_date, order_time, customer_id, nailservice_id) VALUES(?,?,?,?);";
