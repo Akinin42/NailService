@@ -44,7 +44,7 @@ public class Administrator {
         LocalDate date = LocalDate.parse(inputDate);
         LocalTime time = LocalTime.parse(inputTime);
         if (!orderDao.findByTime(date, time).equals(Optional.empty())) {
-            throw new IllegalArgumentException("Sorry you can't get order on this time!"); // not IllegalArg
+            throw new IllegalArgumentException("Sorry you can't get order on this time!");
         }
         Order order = Order.builder()
                 .withDate(date)
